@@ -1,0 +1,2 @@
+custom_1790605632348	Custom / User Trained	What is JDK?	JDK stands for Java Development Kit, which contains the compiler and runtime tools.
+custom_1790605722035	Custom / User Trained	What is JDK?	JDK stands for Java Development Kit, which contains the compiler and runtime tools.

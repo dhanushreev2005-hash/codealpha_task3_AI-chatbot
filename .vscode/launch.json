@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch AI Chatbot (Web Server + UI)",
+            "request": "launch",
+            "mainClass": "com.codealpha.chatbot.Main",
+            "args": "--web",
+            "projectName": "code alpha 3"
+        },
+        {
+            "type": "java",
+            "name": "Launch AI Chatbot (Desktop Swing GUI)",
+            "request": "launch",
+            "mainClass": "com.codealpha.chatbot.Main",
+            "args": "--gui",
+            "projectName": "code alpha 3"
+        },
+        {
+            "type": "java",
+            "name": "Launch AI Chatbot (CLI Terminal Mode)",
+            "request": "launch",
+            "mainClass": "com.codealpha.chatbot.Main",
+            "args": "--cli",
+            "projectName": "code alpha 3",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Launch AI Chatbot (Web + GUI Simultaneous)",
+            "request": "launch",
+            "mainClass": "com.codealpha.chatbot.Main",
+            "args": "--all",
+            "projectName": "code alpha 3"
+        }
+    ]
+}

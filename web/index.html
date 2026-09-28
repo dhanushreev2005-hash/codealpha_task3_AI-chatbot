@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CodeAlpha Artificial Intelligence Chatbot powered by Java NLP pipeline, TF-IDF Vectorization, and Naive Bayes Intent Classification.">
+    <title>CodeAlpha AI Chatbot — Intelligent NLP Assistant</title>
+    <!-- Modern Typography from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark">
+    <div class="app-background">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="bot-avatar-header">
+                    <div class="avatar-icon">🤖</div>
+                    <span class="status-indicator online"></span>
+                </div>
+                <div class="header-titles">
+                    <div class="title-row">
+                        <h1 class="header-title">CodeAlpha AI</h1>
+                        <span class="badge-nlp">NLP &bull; ML Engine</span>
+                    </div>
+                    <p class="header-subtitle">Interactive Java Chatbot with TF-IDF & Naive Bayes</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button id="btn-toggle-hud" class="btn-action" title="Toggle NLP Live Inspector">
+                    <span class="btn-icon">🧠</span>
+                    <span class="btn-text">NLP Inspector</span>
+                </button>
+                <button id="btn-knowledge-base" class="btn-action" title="Knowledge Base & Training">
+                    <span class="btn-icon">📚</span>
+                    <span class="btn-text">Knowledge Base</span>
+                </button>
+                <button id="btn-stats" class="btn-action" title="Engine Statistics">
+                    <span class="btn-icon">📊</span>
+                    <span class="btn-text">Stats</span>
+                </button>
+                <button id="btn-export" class="btn-action btn-icon-only" title="Export Conversation">
+                    <span class="btn-icon">💾</span>
+                </button>
+                <button id="btn-clear" class="btn-action btn-icon-only btn-danger" title="Clear Conversation">
+                    <span class="btn-icon">🗑️</span>
+                </button>
+                <button id="btn-sound-toggle" class="btn-action btn-icon-only" title="Toggle Sound Effects">
+                    <span id="sound-icon" class="btn-icon">🔊</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area (Chat + NLP HUD) -->
+        <main class="main-layout">
+            <!-- Chat Container -->
+            <section class="chat-section">
+                <!-- Chat Messages Scroll Container -->
+                <div id="chat-messages" class="chat-messages-scroll" role="log" aria-live="polite">
+                    <!-- Bot Welcome Message is inserted dynamically -->
+                </div>
+
+                <!-- Interactive Suggested Quick Reply Chips -->
+                <div class="chips-container-wrapper">
+                    <div id="quick-chips" class="quick-chips-scroll">
+                        <!-- Dynamic Chips -->
+                    </div>
+                </div>
+
+                <!-- Input Action Bar -->
+                <div class="chat-input-container">
+                    <div class="input-glow-wrapper">
+                        <button id="btn-mic" class="input-btn btn-mic" title="Voice Input (Speech-to-Text)">
+                            <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" y1="19" x2="12" y2="23"/>
+                                <line x1="8" y1="23" x2="16" y2="23"/>
+                            </svg>
+                        </button>
+                        <textarea id="chat-input" class="chat-textarea" placeholder="Ask about CodeAlpha tasks, Java OOP, math, or type 'teach:'..." rows="1"></textarea>
+                        <button id="btn-send" class="input-btn btn-send" title="Send Message (Enter)">
+                            <svg class="icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="input-meta-info">
+                        <span>Press <kbd>Enter</kbd> to send, <kbd>Shift + Enter</kbd> for newline</span>
+                        <span class="server-status"><span class="pulse-dot"></span> Java Core SE 26 API Online</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NLP Live Inspector HUD Panel -->
+            <aside id="nlp-inspector" class="nlp-hud-panel open">
+                <div class="hud-header">
+                    <div class="hud-title-wrap">
+                        <span class="hud-icon">🧠</span>
+                        <h2 class="hud-title">NLP Live Inspector</h2>
+                    </div>
+                    <button id="btn-close-hud" class="btn-icon-close" title="Close Panel">&times;</button>
+                </div>
+
+                <div class="hud-content">
+                    <!-- Metric Card: Intent -->
+                    <div class="hud-card">
+                        <div class="hud-card-header">
+                            <span class="hud-card-title">Classified Intent</span>
+                            <span id="hud-intent-tag" class="hud-tag intent-tag">Greeting</span>
+                        </div>
+                        <p id="hud-intent-desc" class="hud-card-desc">General greetings and pleasantries</p>
+                    </div>
+
+                    <!-- Metric Card: Confidence Score -->
+                    <div class="hud-card">
+                        <div class="hud-card-header">
+                            <span class="hud-card-title">Confidence Score</span>
+                            <span id="hud-confidence-val" class="hud-stat-value">98%</span>
+                        </div>
+                        <div class="progress-track">
+                            <div id="hud-confidence-bar" class="progress-fill" style="width: 98%;"></div>
+                        </div>
+                        <div class="hud-card-footer">
+                            <span>Threshold: 25%</span>
+                            <span id="hud-algorithm-used">RuleMatcher</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card: Sentiment Analysis -->
+                    <div class="hud-card">
+                        <div class="hud-card-header">
+                            <span class="hud-card-title">Sentiment Analysis</span>
+                            <span id="hud-sentiment-badge" class="hud-tag sentiment-tag">🙂 Positive</span>
+                        </div>
+                        <div class="sentiment-meter-bar">
+                            <div class="sentiment-neutral-marker"></div>
+                            <div id="hud-sentiment-indicator" class="sentiment-indicator" style="left: 72%;"></div>
+                        </div>
+                        <div class="sentiment-scale-labels">
+                            <span>-1.0 Negative</span>
+                            <span>0.0</span>
+                            <span>+1.0 Positive</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card: Extracted Entities -->
+                    <div class="hud-card">
+                        <div class="hud-card-header">
+                            <span class="hud-card-title">Extracted Entities & Tokens</span>
+                        </div>
+                        <div id="hud-entities-list" class="entities-wrap">
+                            <span class="entity-pill">System_Init</span>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card: Pipeline Execution Time -->
+                    <div class="hud-card stats-mini-card">
+                        <div class="mini-stat-item">
+                            <span class="mini-label">Response Time</span>
+                            <span id="hud-latency" class="mini-value">2 ms</span>
+                        </div>
+                        <div class="mini-stat-item">
+                            <span class="mini-label">Session Turns</span>
+                            <span id="hud-turns" class="mini-value">0</span>
+                        </div>
+                        <div class="mini-stat-item">
+                            <span class="mini-label">Memory Context</span>
+                            <span id="hud-context-user" class="mini-value">Guest</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Command Tip -->
+                    <div class="hud-tip-box">
+                        <span class="tip-icon">💡</span>
+                        <div class="tip-text">
+                            <strong>Dynamic Learning:</strong> Type <code>teach: Question -&gt; Answer</code> to train the chatbot live without restarting the server!
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Modal 1: Knowledge Base & Live FAQ Training -->
+    <div id="modal-knowledge" class="modal-backdrop">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">📚</span>
+                    <h2 class="modal-title">Knowledge Base & FAQ Training</h2>
+                </div>
+                <button class="modal-close" data-modal="modal-knowledge">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Training Form Section -->
+                <div class="train-box">
+                    <h3 class="train-box-title">🎓 Teach the Chatbot a New Q&A Pair</h3>
+                    <form id="form-train" class="train-form">
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="train-question">Question / Prompt:</label>
+                                <input type="text" id="train-question" class="form-input" placeholder="e.g. What is the difference between final and finally in Java?" required>
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="train-category">Category:</label>
+                                <select id="train-category" class="form-input">
+                                    <option value="Java Programming">Java Programming</option>
+                                    <option value="CodeAlpha Internship">CodeAlpha Internship</option>
+                                    <option value="AI & NLP">AI & NLP</option>
+                                    <option value="General Tech">General Tech</option>
+                                    <option value="Custom Knowledge">Custom Knowledge</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="train-answer">Answer / Response:</label>
+                            <textarea id="train-answer" class="form-input" rows="3" placeholder="Provide the detailed explanation or answer..." required></textarea>
+                        </div>
+                        <button type="submit" id="btn-submit-train" class="btn-primary">
+                            <span>⚡ Save & Retrain NLP Engine</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Existing FAQs List -->
+                <div class="faq-list-section">
+                    <div class="faq-list-header">
+                        <h3 class="faq-list-title">Loaded FAQs (<span id="faq-count">0</span> entries)</h3>
+                        <input type="text" id="faq-search" class="form-input search-input" placeholder="Search knowledge base...">
+                    </div>
+                    <div id="faq-container" class="faq-accordion-container">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Analytics & Engine Stats -->
+    <div id="modal-stats" class="modal-backdrop">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-wrap">
+                    <span class="modal-icon">📊</span>
+                    <h2 class="modal-title">Engine Analytics & Diagnostics</h2>
+                </div>
+                <button class="modal-close" data-modal="modal-stats">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-total-faqs">15</span>
+                        <span class="stat-name">Active FAQs Loaded</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-vocab-size">240+</span>
+                        <span class="stat-name">Vocabulary Terms</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-turns">0</span>
+                        <span class="stat-name">Conversation Turns</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="stat-uptime">0s</span>
+                        <span class="stat-name">Server Uptime</span>
+                    </div>
+                </div>
+
+                <div class="tech-stack-overview">
+                    <h4>🛠️ Embedded Java Architecture</h4>
+                    <ul class="tech-list">
+                        <li><strong>Tokenization:</strong> Custom regex punctuation stripper & Porter Stemmer</li>
+                        <li><strong>Semantic Matching:</strong> Term Frequency-Inverse Document Frequency (TF-IDF) & Cosine Similarity</li>
+                        <li><strong>Machine Learning:</strong> Multinomial Naive Bayes Intent Classifier with Laplace Smoothing</li>
+                        <li><strong>Spell & Typo Resilience:</strong> Levenshtein Dynamic Distance Matrix</li>
+                        <li><strong>Math & Utilities:</strong> AST Recursive-Descent Expression Parser</li>
+                        <li><strong>HTTP Layer:</strong> Standard Java SE <code>com.sun.net.httpserver</code> (Zero External JARs)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
